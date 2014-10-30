@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Petty Cash Voucher" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="10.0" width="530" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table8">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table9">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#FFFFFF" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table15">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table16">
+      <blockAlignment value="CENTER"/>
+      <blockValign value="CENTER"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table17">
+      <blockAlignment value="CENTER"/>
+      <blockValign value="BOTTOM"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#FFFFFF" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table18">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table19">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table20">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica-Bold" fontSize="9.0" leading="11"/>
+    <paraStyle name="P2" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica-Bold" fontSize="9.0" leading="11"/>
+    <paraStyle name="P6" fontName="Helvetica-Bold" fontSize="9.0" leading="11"/>
+    <paraStyle name="P7" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P8" fontName="Helvetica-Bold" fontSize="9.0" leading="11"/>
+    <paraStyle name="P9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text_20_body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table_20_Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table_20_Heading" fontName="Times-Roman" alignment="CENTER"/>
+  </stylesheet>
+  <images/>
+  <story>
+    <para style="P6">[[ repeatIn(objects,'o') ]]</para>
+    <blockTable colWidths="360.0,72.0,66.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">ใบสำคัญเลขที่</para>
+        </td>
+        <td>
+          <para style="P7">[[o.name]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="498.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P4">ใบสำคํญจ่ายเงินสดย่อย</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="498.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P4">(PETTY CASH VOUCHER)</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="327.0,47.0,124.0" style="Table7">
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">วันที่จ่าย</para>
+        </td>
+        <td>
+          <para style="P9">[[o.date_paid or ""]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="36.0,195.0,95.0,172.0" style="Table8">
+      <tr>
+        <td>
+          <para style="P1">จ่ายให้</para>
+        </td>
+        <td>
+          <para style="P9">[[o.partner_id.name]]</para>
+        </td>
+        <td>
+          <para style="P1">ฝ่ายงาน/แผนกงาน</para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="390.0,108.0" style="Table9">
+      <tr>
+        <td>
+          <para style="P2">รายละเอียดของรายการที่เบิกจ่าย</para>
+        </td>
+        <td>
+          <para style="P2">จำนวนเงิน</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="20.0,370.0,108.0" style="Table9">
+      <tr>
+        <td>
+          <para style="P8">[[repeatIn(o.lines,'l')]]</para>
+        </td>
+        <td>
+          <para style="P8">[[l.name]]</para>
+        </td>
+        <td>
+          <para style="P10">[[l.subtotal]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="390.0,108.0" style="Table15">
+      <tr>
+        <td>
+          <para style="P2">รวม</para>
+        </td>
+        <td>
+          <para style="P10">[[o.total]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="117.0,381.0" rowHeights="25.0" style="Table16">
+      <tr>
+        <td>
+          <para style="P1" >จำนวนเงินเป็นตัวอักษร : </para>
+        </td>
+        <td>
+          <para style="P1" alignment="CENTER">
+            <font color="black" name="Garuda-Oblique"> [[o.total_word]] [["บาทถ้วน"]]</font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="81,270.0,39.0,108.0" rowHeights="25,20,20,20" style="Table17">
+      <tr>
+        <td>	
+          <para style="P1">ผู้รับเงิน :</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="black">[[o.received_by.name or "............................................................"]]</font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">วันที่</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="black">[[o.date_paid or "........../.............../.........."]]</font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">ผู้จัดทำ :</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="black">[[o.draft_by.name or "............................................................"]]</font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">วันที่</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="black">[[o.date or "........../.............../.........." ]]</font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">ผู้ตรวจสอบ :</para>
+        </td>
+        <td>
+          <para style="P3">[[o.checked_by.name or "............................................................" ]]</para>
+        </td>
+        <td>
+          <para style="P1">วันที่</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="black">[[o.date_checked or "........../.............../.........." ]]</font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">ผู้อนุมัติจ่ายเงิน :</para>
+        </td>
+        <td>
+          <para style="P3">[[o.approved_by.name or "............................................................" ]]</para>
+        </td>
+        <td>
+          <para style="P1">วันที่</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="black">[[o.date_approved or "........../.............../.........."]] </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+  </story>
+</document>

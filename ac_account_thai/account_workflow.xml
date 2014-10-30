@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+<record id="wkf_pc_replen" model="workflow">
+    <field name="name">pc.replen</field>
+    <field name="osv">pc.replen</field>
+    <field name="on_create">True</field>
+</record>
+
+<!-- activity -->
+
+<record id="wka_draft" model="workflow.activity">
+    <field name="wkf_id" ref="wkf_pc_replen"/>
+    <field name="name">draft</field>
+    <field name="flow_start">True</field>
+    <field name="kind">function</field>
+    <field name="action">write({'state':'draft'})</field>
+</record>
+
+<record id="wka_approved" model="workflow.activity">
+    <field name="wkf_id" ref="wkf_pc_replen"/>
+    <field name="name">approved</field>
+    <field name="kind">subflow</field>
+    <field name="subflow_id" search="[('name','=','account.invoice.basic')]"/>
+    <field name="action">wkf_approve()</field>
+</record>
+
+<record id="wka_paid" model="workflow.activity">
+    <field name="wkf_id" ref="wkf_pc_replen"/>
+    <field name="name">paid</field>
+    <field name="kind">function</field>
+    <field name="action">write({'state':'paid'})</field>
+</record>
+
+<record id="wka_canceled" model="workflow.activity">
+    <field name="wkf_id" ref="wkf_pc_replen"/>
+    <field name="name">canceled</field>
+    <field name="kind">function</field>
+    <field name="action">write({'state':'canceled'})</field>
+</record>
+
+<!-- transition -->
+
+<record id="wkt_approved" model="workflow.transition">
+    <field name="act_from" ref="wka_draft"/>
+    <field name="act_to" ref="wka_approved"/>
+    <field name="signal">button_approve</field>
+</record>
+
+<record id="wkt_paid" model="workflow.transition">
+    <field name="act_from" ref="wka_approved"/>
+    <field name="act_to" ref="wka_paid"/>
+    <field name="signal">subflow.paid</field>
+</record>
+
+<record id="wkt_canceled1" model="workflow.transition">
+    <field name="act_from" ref="wka_draft"/>
+    <field name="act_to" ref="wka_canceled"/>
+    <field name="signal">button_cancel</field>
+</record>
+
+<record id="wkt_canceled2" model="workflow.transition">
+    <field name="act_from" ref="wka_approved"/>
+    <field name="act_to" ref="wka_canceled"/>
+    <field name="signal">subflow.cancel</field>
+</record>
+
+<record id="wkt_to_draft" model="workflow.transition">
+    <field name="act_from" ref="wka_canceled"/>
+    <field name="act_to" ref="wka_draft"/>
+    <field name="signal">button_draft</field>
+</record>
+
+</data>
+</openerp>
+<!-- vim: set fdm=marker : -->

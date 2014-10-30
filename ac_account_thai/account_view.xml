@@ -1,0 +1,1308 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+<!--{{{ wizards -->
+<wizard id="wiz_make_bill" model="res.partner" name="make_bill" string="Make Bill Issue"/>
+
+<wizard id="wiz_inv_make_vouch" model="account.invoice" name="inv_make_vouch" string="Make Voucher"/>
+
+<wizard id="wiz_bill_make_vouch" model="account.bill" name="bill_make_vouch" string="Make Voucher"/>
+
+<wizard id="wiz_pc_reimburse" model="pc.fund" name="pc.reimburse" string="Replenish"/>
+
+<wizard id="wiz_bank_st_import" model="ac.bank.statement" name="bank.st.import" string="Import From E-Banking"/>
+
+<wizard id="wiz_batch_pay" model="account.voucher" name="batch.pay" string="Make Batch Payment"/>
+
+<wizard id="wiz_batch_pay_export" model="batch.payment" name="batch.pay.export" string="Export To E-Banking"/>
+
+<wizard id="wiz_report_bs" model="account.report.report" name="report.bs" string="Balance Sheet"/>
+
+<wizard id="wiz_report_pl" model="account.report.report" name="report.pl" string="Income Statement"/>
+
+<wizard id="wiz_report_cf" model="account.report.report" name="report.cf" string="Cash Flow Statement"/>
+<!--}}}-->
+
+<!--{{{ views -->
+<!--{{{ res.partner -->
+<record id="view_partner_form" model="ir.ui.view">
+    <field name="name">ac_account_thai.partner.form</field>
+    <field name="model">res.partner</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <page string="Accounting" position="inside">
+            <field name="tin"/>
+            <field name="pin"/>
+        </page>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.tax -->
+<record id="view_tax_form" model="ir.ui.view">
+    <field name="name">ac_account_thai.tax.form</field>
+    <field name="model">account.tax</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="account.view_tax_form"/>
+    <field name="arch" type="xml">
+        <field name="type" position="after">
+            <field name="is_wht"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_tax_tree" model="ir.ui.view">
+    <field name="name">ac_account_thai.tax.tree</field>
+    <field name="model">account.tax</field>
+    <field name="type">tree</field>
+    <field name="inherit_id" ref="account.view_tax_tree"/>
+    <field name="arch" type="xml">
+        <field name="description" position="after">
+            <field name="is_wht"/>
+        </field>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.bill -->
+<record id="view_bill_tree" model="ir.ui.view">
+    <field name="name">account.bill.tree</field>
+    <field name="model">account.bill</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Bill Issues">
+            <field name="name"/>
+            <field name="type"/>
+            <field name="partner_id"/>
+            <field name="date"/>
+            <field name="total"/>
+            <field name="currency_id"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_bill_form" model="ir.ui.view">
+    <field name="name">account.bill.form</field>
+    <field name="model">account.bill</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Bill Issue">
+            <field name="name"/>
+            <field name="type"/>
+            <field name="partner_id" on_change="onchange_partner(partner_id)"/>
+            <field name="address_invoice_id"/>
+            <field name="date"/>
+            <field name="currency_id"/>
+            <notebook colspan="4">
+                <page string="Bill Issue">
+                    <button name="button_compute" states="draft" string="Compute" type="object" colspan="2"/>
+                    <field name="lines" colspan="4" nolabel="1">
+                        <tree string="Bill Lines" editable="bottom">
+                            <field name="invoice_id"/>
+                            <field name="inv_amount"/>
+                            <field name="inv_date"/>
+                            <field name="move_line_inv_id"/>
+                            <field name="bill_amount" sum="Total"/>
+                            <field name="due_date"/>
+                        </tree>
+                    </field>
+                    <field name="state"/>
+                    <group colspan="2" col="3">
+                        <button name="button_checked" states="draft" string="Checked" type="object"/>
+                        <button name="button_sent" states="checked" string="Sent" type="object"/>
+                        <button name="button_cancel" states="draft,checked" string="Cancel" type="object"/>
+                    </group>
+                </page>
+                <page string="Other Info">
+                    <separator string="Additional Information" colspan="4"/>
+                    <field name="notes" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.voucher -->
+<record id="view_vouch_tree" model="ir.ui.view">
+    <field name="name">account.voucher.tree</field>
+    <field name="model">account.voucher</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Vouchers">
+            <field name="name"/>
+            <field name="type"/>
+            <field name="date"/>
+            <field name="partner_id"/>
+            <field name="pay_mode_id"/>
+            <field name="currency_id"/>
+            <field name="inv_total"/>
+            <field name="wht"/>
+            <field name="pay_total" sum="Total"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_vouch_form" model="ir.ui.view">
+    <field name="name">account.voucher.form</field>
+    <field name="model">account.voucher</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Voucher">
+            <field name="name"/>
+            <field name="type"/>
+            <field name="partner_id"/>
+            <field name="date"/>
+            <field name="pay_mode_id"/>
+            <field name="currency_id"/>
+            <notebook colspan="4">
+                <page string="Voucher">
+                    <field name="lines" colspan="4" nolabel="1">
+                        <tree string="Voucher Lines">
+                            <field name="name"/>
+                            <field name="account_id"/>
+                            <field name="amount"/>
+                        </tree>
+                        <form string="Voucher Line">
+                            <field name="move_line_inv_id" domain="[('partner_id','=',parent.partner_id),('account_id.type','=',parent.type=='receipt' and 'receivable' or 'payable'),('reconcile_id','=',False)]" on_change="onchange_move_line(move_line_inv_id)"/>
+                            <field name="name"/>
+                            <field name="account_id"/>
+                            <field name="amount"/>
+                            <field name="taxes" nolabel="1" colspan="4" context="{'amount':amount}">
+                                <tree string="Taxes">
+                                    <field name="tax_id"/>
+                                    <field name="base"/>
+                                    <field name="amount"/>
+                                </tree>
+                                <form string="Tax">
+                                    <field name="tax_id" on_change="onchange_tax(tax_id,base)"/>
+                                    <field name="base" on_change="onchange_tax(tax_id,base)"/>
+                                    <field name="amount"/>
+                                </form>
+                            </field>
+                        </form>
+                    </field>
+                    <field name="taxes" nolabel="1" colspan="2">
+                        <tree string="Taxes">
+                            <field name="name"/>
+                            <field name="base"/>
+                            <field name="amount"/>
+                        </tree>
+                        <form string="Tax">
+                            <field name="name"/>
+                            <field name="account_id"/>
+                            <field name="base"/>
+                            <field name="amount"/>
+                            <field name="base_code_id"/>
+                            <field name="tax_code_id"/>
+                        </form>
+                    </field>
+                    <group colspan="2" col="4">
+                        <button string="Compute Taxes" name="button_compute_taxes" type="object" states="draft" colspan="2"/>
+                        <field name="inv_total"/>
+                        <label string="" colspan="2"/>
+                        <field name="wht"/>
+                        <field name="state"/>
+                        <field name="pay_total"/>
+                        <group colspan="4" col="10">
+                            <button name="button_checked" states="draft" string="Checked" type="object"/>
+                            <button name="button_paid" states="checked" string="Paid" type="object"/>
+                            <button name="button_post" states="paid" string="Post" type="object"/>
+                            <button name="button_cancel" states="draft,checked,paid,posted" string="Cancel" type="object"/>
+                            <button name="button_to_draft" states="canceled" string="To Draft" type="object"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Cheques" attrs="{'invisible':[('method','!=','cheque')]}">
+                    <field name="cheques" nolabel="1" colspan="4" domain="[('type','=',type)]" context="{'type':type,'partner_id':partner_id}">
+                        <tree string="Cheques">
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="amount"/>
+                            <field name="bank_id"/>
+                            <field name="branch"/>
+                            <field name="method"/>
+                            <field name="state"/>
+                        </tree>
+                        <form string="Cheque">
+                            <field name="name"/>
+                            <field name="method"/>
+                            <field name="date"/>
+                            <field name="amount"/>
+                            <field name="bank_id"/>
+                            <field name="branch"/>
+                            <field name="state"/>
+                            <field name="type" invisible="1"/>
+                            <field name="partner_id" invisible="1"/>
+                        </form>
+                    </field>
+                </page>
+                <page string="Other Info">
+                    <group colspan="4" col="6">
+                        <field name="draft_by"/>
+                        <field name="checked_by"/>
+                        <field name="posted_by"/>
+                    </group>
+                    <field name="move_id"/>
+                    <field name="batch_pay_id"/>
+                    <separator string="Additional Information" colspan="4"/>
+                    <field name="notes" colspan="4" nolabel="1"/>
+                    <separator string="Required Documents For Cheque Payment" colspan="4"/>
+                    <field name="wht_no"/>
+                    <!--<field name="wht_name"/>-->
+                    <field name="doc_receipt"/>
+                    <field name="doc_invoice"/>
+                    <field name="doc_id"/>
+                </page>
+            </notebook>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.cheque -->
+<record id="view_cheque_tree" model="ir.ui.view">
+    <field name="name">account.cheque.tree</field>
+    <field name="model">account.cheque</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Cheques">
+            <field name="type"/>
+            <field name="vouch_id"/>
+            <field name="name"/>
+            <field name="method"/>
+            <field name="date"/>
+            <field name="partner_id"/>
+            <field name="amount"/>
+            <field name="bank_id"/>
+            <field name="branch"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_cheque_form" model="ir.ui.view">
+    <field name="name">account.cheque.form</field>
+    <field name="model">account.cheque</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Cheque">
+            <field name="name"/>
+            <field name="method" on_change="onchange_method(method)"/>
+            <field name="type"/>
+            <field name="vouch_id" domain="[('type','=',type)]"/>
+            <field name="date"/>
+            <field name="partner_id"/>
+            <field name="amount"/>
+            <field name="bank_id"/>
+            <field name="branch"/>
+            <separator colspan="4"/>
+            <field name="state"/>
+            <button string="Paid" name="button_paid" type="object" states="hold"/>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ wizard.print.tax -->
+<record id="view_print_tax_form" model="ir.ui.view">
+    <field name="name">print.tax.form</field>
+    <field name="model">wizard.print.tax</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Print Tax Declaration">
+            <field name="tax_form"/>
+            <field name="period_id"/>
+            <group colspan="4" col="4">
+                <button name="button_print" string="Print" type="object"/>
+                <button name="button_cancel" string="Cancel" type="object" special="cancel"/>
+            </group>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ pc.fund -->
+<record id="view_pc_fund_tree" model="ir.ui.view">
+    <field name="name">pc.fund.tree</field>
+    <field name="model">pc.fund</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Petty Cash Funds">
+            <field name="name"/>
+            <field name="employee_id"/>
+            <field name="account_id"/>
+            <field name="reserved"/>
+            <field name="balance"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_pc_fund_form" model="ir.ui.view">
+    <field name="name">pc.fund.form</field>
+    <field name="model">pc.fund</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Petty Cash Fund">
+            <field name="name"/>
+            <field name="employee_id"/>
+            <field name="account_id"/>
+            <field name="journal_id"/>
+            <field name="reserved"/>
+            <field name="balance"/>
+            <notebook colspan="4">
+                <page string="Payments">
+                    <field name="payments_todo" colspan="4" nolabel="1">
+                        <tree string="New Payments">
+                            <field name="date"/>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="amount_pay" sum="Total"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Replenishments">
+                    <field name="replens" colspan="4" nolabel="1">
+                        <tree string="Replenishments">
+                            <field name="date"/>
+                            <field name="name"/>
+                            <field name="amount"/>
+                            <field name="amount_reimb"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ pc.payment -->
+<record id="view_pc_payment_tree" model="ir.ui.view">
+    <field name="name">pc.payment.tree</field>
+    <field name="model">pc.payment</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Petty Cash Payments">
+            <field name="fund_id"/>
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="date_paid"/>
+            <field name="amount_pay"/>
+            <field name="state"/>
+            <field name="replen_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_pc_payment_form" model="ir.ui.view">
+    <field name="name">pc.payment.form</field>
+    <field name="model">pc.payment</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Petty Cash Payment">
+            <field name="fund_id"/>
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="employee_id"/>
+            <field name="force_date"/>
+            <field name="period_id"/>
+            <field name="lines" colspan="4" nolabel="1">
+                <tree string="Payment Lines">
+                    <field name="name"/>
+                    <field name="price_unit"/>
+                    <field name="quantity"/>
+                    <field name="subtotal" sum="Total"/>
+                </tree>
+                <form string="Payment Line">
+                    <field name="product_id" on_change="onchange_product(product_id)"/>
+                    <field name="name"/>
+                    <field name="price_unit"/>
+                    <field name="quantity"/>
+                    <field name="account_id"/>
+                    <field name="subtotal"/>
+                    <separator string="Taxes" colspan="4"/>
+                    <field name="taxes" colspan="4" nolabel="1"/>
+                </form>
+            </field>
+            <group col="10" colspan="4">
+                <field name="amount_untaxed"/>
+                <field name="amount_tax"/>
+                <field name="amount_total"/>
+                <field name="amount_wht"/>
+                <field name="amount_pay"/>
+            </group>
+            <group col="8" colspan="4">
+                <field name="state"/>
+                <button states="draft" name="button_check" type="object" string="Check"/>
+                <button states="checked" name="button_approve" type="object" string="Approve" groups="account.group_account_manager"/>
+                <button states="approved" name="button_paid" type="object" string="Paid"/>
+                <button states="draft,checked,approved,paid" name="button_cancel" type="object" string="Cancel"/>
+                <button states="canceled" name="button_draft" type="object" string="To Draft"/>
+            </group>
+            <group col="8" colspan="4">
+                <field name="draft_by"/>
+                <!--<field name="received_by"/>-->
+                <field name="checked_by"/>
+                <field name="approved_by"/>
+            </group>
+            <field name="replen_id"/>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ pc.replen -->
+<record id="view_pc_replen_tree" model="ir.ui.view">
+    <field name="name">pc.replen.tree</field>
+    <field name="model">pc.replen</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Petty Cash Replenishments">
+            <field name="fund_id"/>
+            <field name="date"/>
+            <field name="name"/>
+            <field name="amount"/>
+            <field name="amount_reimb"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_pc_replen_form" model="ir.ui.view">
+    <field name="name">pc.replen.form</field>
+    <field name="model">pc.replen</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Petty Cash Replenishment">
+            <field name="fund_id"/>
+            <field name="date"/>
+            <field name="name"/>
+            <field name="invoice_id"/>
+            <field name="amount"/>
+            <field name="amount_reimb"/>
+            <field name="payments" colspan="4" nolabel="1">
+                <tree string="Reimbursed Payments">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="amount_pay" sum="Total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+            <group col="8" colspan="4">
+                <field name="state"/>
+                <button states="draft" name="button_approve" string="Approve"/>
+                <button states="draft" name="button_cancel" string="Cancel"/>
+                <button states="canceled" name="button_draft" string="To Draft"/>
+            </group>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ ac.bank.statement -->
+<record id="view_bank_st_tree" model="ir.ui.view">
+    <field name="name">bank.st.tree</field>
+    <field name="model">ac.bank.statement</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Bank Statements">
+            <field name="name"/>
+            <field name="account_id"/>
+            <field name="period_id"/>
+            <field name="balance_start"/>
+            <field name="balance_end"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_bank_st_form" model="ir.ui.view">
+    <field name="name">bank.st.form</field>
+    <field name="model">ac.bank.statement</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Bank Statement">
+            <field name="name"/>
+            <newline/>
+            <field name="account_id"/>
+            <field name="period_id"/>
+            <field name="balance_start"/>
+            <field name="balance_end"/>
+            <field name="lines" colspan="4" nolabel="1">
+                <tree string="Statement Lines" colors="blue:reconciled;red:bank_reconcile_id and not reconciled" limit="20">
+                    <field name="sequence"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="cheque"/>
+                    <field name="debit" sum="Deposit"/>
+                    <field name="credit" sum="Withdrawal"/>
+                    <field name="balance"/>
+                    <field name="bank_reconcile_id"/>
+                    <field name="reconciled" invisible="1"/>
+                </tree>
+                <form string="Statement Line">
+                    <field name="sequence"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="cheque"/>
+                    <newline/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="balance"/>
+                    <separator colspan="4" string="Reconciliation"/>
+                    <field name="bank_reconcile_id"/>
+                    <separator colspan="4" string="Notes"/>
+                    <field name="notes" colspan="4" nolabel="1"/>
+                </form>
+            </field>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ ac.bank.statement.line -->
+<record id="view_bank_st_line_tree" model="ir.ui.view">
+    <field name="name">bank.st.line.tree</field>
+    <field name="model">ac.bank.statement.line</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Bank Statement Lines">
+            <field name="st_id"/>
+            <field name="sequence"/>
+            <field name="date"/>
+            <field name="name"/>
+            <field name="cheque"/>
+            <field name="debit" sum="Deposit"/>
+            <field name="credit" sum="Withdrawal"/>
+            <field name="bank_reconcile_id"/>
+            <field name="reconciled" invisible="1"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_bank_st_line_form" model="ir.ui.view">
+    <field name="name">bank.st.line.form</field>
+    <field name="model">ac.bank.statement.line</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Bank Statement Line">
+            <field name="st_id"/>
+            <field name="sequence"/>
+            <field name="date"/>
+            <field name="name"/>
+            <field name="cheque"/>
+            <newline/>
+            <field name="debit"/>
+            <field name="credit"/>
+            <separator colspan="4" string="Reconciliation"/>
+            <field name="bank_reconcile_id"/>
+            <separator colspan="4" string="Notes"/>
+            <field name="notes" colspan="4" nolabel="1"/>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ ac.bank.reconcile -->
+<record id="view_bank_reconcile_tree" model="ir.ui.view">
+    <field name="name">bank.reconcile.tree</field>
+    <field name="model">ac.bank.reconcile</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Bank Reconciliations">
+            <field name="name"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_bank_reconcile_form" model="ir.ui.view">
+    <field name="name">bank.reconcile.form</field>
+    <field name="model">ac.bank.reconcile</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Bank Reconciliation">
+            <field name="st_lines" colspan="4" nolabel="1">
+                <tree string="Bank Statement Lines">
+                    <field name="st_id"/>
+                    <field name="sequence"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="cheque"/>
+                    <field name="debit" sum="Deposit"/>
+                    <field name="credit" sum="Withdrawal"/>
+                </tree>
+            </field>
+            <field name="move_lines" colspan="4" nolabel="1">
+                <tree string="Account Entries">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="debit" sum="Debit"/>
+                    <field name="credit" sum="Credit"/>
+                    <field name="journal_id"/>
+                    <field name="move_id"/>
+                </tree>
+            </field>
+            <field name="balanced"/>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.move.line -->
+<record id="view_account_move_line_form" model="ir.ui.view">
+    <field name="name">account.move.line.form</field>
+    <field name="model">account.move.line</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="account.view_move_line_form"/>
+    <field name="arch" type="xml">
+        <field name="reconcile_partial_id" position="after">
+            <field name="bank_reconcile_id"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_account_move_line_tree" model="ir.ui.view">
+    <field name="name">account.move.line.tree</field>
+    <field name="model">account.move.line</field>
+    <field name="type">tree</field>
+    <field name="inherit_id" ref="account.view_move_line_tree"/>
+    <field name="arch" type="xml">
+        <field name="reconcile_partial_id" position="after">
+            <field name="bank_reconcile_id"/>
+        </field>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ wiz.bank.reconcile -->
+<record id="view_wiz_bank_reconcile" model="ir.ui.view">
+    <field name="name">wiz.bank.reconcile</field>
+    <field name="model">wiz.bank.reconcile</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Reconcile Entries">
+            <field name="st_id"/>
+            <field name="account_id"/>
+            <separator string="Bank Statement Lines" colspan="4"/>
+            <field name="st_lines" colspan="4" nolabel="1" width="700" height="200" domain="[('st_id','=',st_id),('bank_reconcile_id','=',False)]">
+                <tree string="Bank Statement Lines">
+                    <field name="st_id"/>
+                    <field name="sequence"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="cheque"/>
+                    <field name="debit" sum="Deposit"/>
+                    <field name="credit" sum="Withdrawal"/>
+                </tree>
+            </field>
+            <group col="4" colspan="4">
+                <label colspan="3"/>
+                <button name="button_find_move_line" type="object" string="Find Account Entries"/>
+            </group>
+            <separator string="Account Entries" colspan="4"/>
+            <field name="move_lines" colspan="4" nolabel="1" height="200" domain="[('account_id','=',account_id),('bank_reconcile_id','=',False)]">
+                <tree string="Account Entries">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="debit" sum="Debit"/>
+                    <field name="credit" sum="Credit"/>
+                    <field name="journal_id"/>
+                    <field name="move_id"/>
+                </tree>
+            </field>
+            <group col="4" colspan="4">
+                <label colspan="2"/>
+                <button name="button_reconcile" type="object" string="Reconcile"/>
+                <button special="cancel" string="Cancel"/>
+            </group>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ batch.payment -->
+<record id="view_batch_pay_tree" model="ir.ui.view">
+    <field name="name">batch.pay.tree</field>
+    <field name="model">batch.payment</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Batch Payments">
+            <field name="name"/>
+            <field name="pay_mode_id"/>
+            <field name="date"/>
+            <field name="total"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_batch_pay_form" model="ir.ui.view">
+    <field name="name">batch.pay.form</field>
+    <field name="model">batch.payment</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Batch Payment">
+            <field name="name"/>
+            <field name="pay_mode_id"/>
+            <field name="date"/>
+            <field name="vouchers" colspan="4" nolabel="1"/>
+            <field name="total"/>
+            <newline/>
+            <field name="state"/>
+            <button string="Ordered" states="draft" name="button_ordered" type="object"/>
+            <button string="Paid" states="ordered" name="button_paid" type="object"/>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ payment.mode -->
+<record id="view_payment_mode_tree" model="ir.ui.view">
+    <field name="name">payment.mode.tree</field>
+    <field name="model">ac.payment.mode</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Payment Modes">
+            <field name="name"/>
+            <field name="method"/>
+            <field name="account_id"/>
+            <field name="journal_id"/>
+            <field name="bank_account_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_payment_mode_form" model="ir.ui.view">
+    <field name="name">payment.mode.form</field>
+    <field name="model">ac.payment.mode</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Payment Mode">
+            <notebook>
+                <page string="General">
+                    <field name="name"/>
+                    <field name="method"/>
+                    <field name="account_id"/>
+                    <field name="journal_id"/>
+                    <field name="bank_account_id"/>
+                </page>
+                <page string="E-Banking">
+                    <field name="company_code"/>
+                </page>
+            </notebook>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ add.cost -->
+<record id="view_add_cost_tree" model="ir.ui.view">
+    <field name="name">add.cost.tree</field>
+    <field name="model">add.cost</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Landed Costs">
+            <field name="name"/>
+            <field name="date"/>
+            <field name="desc"/>
+            <field name="amount"/>
+            <field name="currency_id"/>
+            <field name="method"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_add_cost_form" model="ir.ui.view">
+    <field name="name">add.cost.form</field>
+    <field name="model">add.cost</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Landed Cost">
+            <field name="name"/>
+            <field name="date"/>
+            <field name="desc"/>
+            <field name="amount"/>
+            <field name="currency_id"/>
+            <field name="method"/>
+            <field name="journal_id"/>
+            <notebook colspan="4">
+                <page string="Items">
+                    <field name="lines" nolabel="1" colspan="4">
+                        <tree string="Items">
+                            <field name="date"/>
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="price_unit"/>
+                            <field name="amount"/>
+                            <field name="cost" sum="Total Allocated Cost"/>
+                            <field name="cost_unit"/>
+                            <field name="state"/>
+                        </tree>
+                        <form string="Item">
+                            <field name="move_id" domain="[('location_id.usage','=','supplier'),('location_dest_id.usage','=','internal')]"/>
+                            <field name="date"/>
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="price_unit"/>
+                            <field name="amount"/>
+                            <field name="cost"/>
+                            <field name="cost_unit"/>
+                            <field name="state"/>
+                        </form>
+                    </field>
+                </page>
+                <page string="Other Info">
+                    <field name="move_id"/>
+                    <separator string="Notes" colspan="4"/>
+                    <field name="notes" nolabel="1" colspan="4"/>
+                </page>
+            </notebook>
+            <field name="state"/>
+            <group colspan="2" col="10">
+                <button name="btn_compute" string="Compute" type="object" states="draft"/>
+                <button name="btn_post" string="Post" type="object" states="draft"/>
+                <button name="btn_cancel" string="Cancel" type="object" states="draft,posted"/>
+                <button name="btn_draft" string="To Draft" type="object" states="canceled"/>
+            </group>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ stock.move -->
+<record id="view_stock_move_tree" model="ir.ui.view">
+    <field name="name">ac_account_thai.stock.move.tree</field>
+    <field name="model">stock.move</field>
+    <field name="type">tree</field>
+    <field name="priority" eval="100"/>
+    <field name="arch" type="xml">
+        <tree color="grey:state=='cancel'" string="Stock Moves">
+            <field name="name"/>
+            <field name="product_id"/>
+            <field name="product_qty" on_change="onchange_quantity(prod uct_id, product_qty, product_uom, product_uos)"/>
+            <field name="product_uom" string="UOM"/>
+            <field name="price_unit"/>
+            <field name="amount"/>
+            <field name="fifo_open_qty"/>
+            <field name="picking_id" select="1"/>
+            <field name="prodlot_id"/>
+            <field name="location_id"/>
+            <field name="location_dest_id"/>
+            <field name="date_planned"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_stock_move_form" model="ir.ui.view">
+    <field name="name">ac_account_thai.stock.move.form</field>
+    <field name="model">stock.move</field>
+    <field name="type">form</field>
+    <field name="priority" eval="100"/>
+    <field name="arch" type="xml">
+        <form string="Stock Moves">
+            <separator colspan="4" string="Move Information"/>
+            <field name="location_id" select="1"/>
+            <field name="location_dest_id" select="1"/>
+            <field colspan="4" name="product_id" select="1"/>
+            <field name="product_qty" select="2" on_change="onchange_quantity(product_id, product_qty, product_uom, product_uos)"/>
+            <field name="product_uom" select="2"/>
+            <field name="product_uos" select="2"/>
+            <field colspan="4" name="name" select="2"/>
+            <field name="date"/>
+            <field name="date_planned"/>
+            <field name="priority"/>
+            <field name="address_id" select="2" context="{'contact_display':'partner'}"/>
+            <newline/>
+            <field name="picking_id" select="2"/>
+            <newline/>
+            <field name="prodlot_id" select="2"
+                context="{'location_id':location_id, 'product_id':product_id}"
+                domain="[('product_id','=',product_id)]"
+                on_change="onchange_lot_id(prodlot_id,product_qty, location_id)"/>
+            <field name="tracking_id" select="2"/>
+            <newline/>
+            <label/>
+            <button name="%(stock.track_line)d" string="Split in production lots" type="action"/>
+            <separator colspan="4" string="Move State"/>
+            <field name="state" select="1"/>
+            <group col="4" colspan="2">
+                <button name="action_confirm" states="draft" string="Confirm" type="object"/>
+                <button name="action_assign" states="confirmed" string="Set Available" type="object"/>
+                <button name="action_cancel" states="assigned,confirmed" string="Cancel" type="object"/>
+                <button name="action_done" states="assigned" string="Make Parcel" type="object"/>
+            </group>
+            <separator colspan="4" string="Costing"/>
+            <field name="price_unit"/>
+            <field name="amount"/>
+            <field name="fifo_open_qty"/>
+        </form>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.report.report -->
+<record id="view_account_report_tree" model="ir.ui.view">
+    <field name="name">ac_account_thai.account.report.tree</field>
+    <field name="model">account.report.report</field>
+    <field name="type">tree</field>
+    <field eval="100" name="priority"/>
+    <field name="field_parent">child_ids</field>
+    <field name="arch" type="xml">
+        <tree string="Accounting reporting">
+            <field name="code"/>
+            <field name="name"/>
+            <field name="amount"/>
+        </tree>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ purchase.order -->
+<record id="view_po_form" model="ir.ui.view">
+    <field name="name">view.po.form.discount</field>
+    <field name="model">purchase.order</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <field name="partner_ref" position="after">
+                <field name="price_type"/>
+            </field>
+            <field name="price_unit" position="after">
+                <field name="discount"/>
+            </field>
+            <field name="order_line" position="after">
+                <field name="discount_extra"/>
+                <field name="discount_extra_amount"/>
+            </field>
+        </data>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ purchase.order.line -->
+<record model="ir.ui.view" id="purchase_order_line_tree">
+    <field name="name">purchase.order.line.tree.discount</field>
+    <field name="model">purchase.order.line</field>
+    <field name="type">tree</field>
+    <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+    <field name="arch" type="xml">
+        <data>
+            <field name="price_unit" position="after">
+                <field name="discount"/>
+            </field>
+        </data>
+    </field>
+</record>
+
+<record model="ir.ui.view" id="purchase_order_line_form">
+    <field name="name">purchase.order.line.form_discount</field>
+    <field name="model">purchase.order.line</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
+    <field name="arch" type="xml">
+    <data>
+        <field name="price_unit" position="after">
+            <field name="discount"/>
+            <field name="discount_amount"/>
+        </field>
+    </data>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ sale.order -->
+<record id="view_so_form" model="ir.ui.view">
+    <field name="name">view.so.form.discount</field>
+    <field name="model">sale.order</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <field name="project_id" position="after">
+                <field name="price_type"/>
+            </field>
+            <field name="price_net" position="replace"/>
+            <xpath expr="//tree/field[@name='discount']" position="replace"/>
+            <xpath expr="//tree/field[@name='price_unit']" position="after">
+                <field name="discount"/>
+            </xpath>
+            <field name="order_line" position="after">
+                <group colspan="4">
+                    <field name="discount_extra"/>
+                    <field name="discount_extra_amount"/>
+                </group>
+            </field>
+        </data>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ sale.order.line -->
+<record id="view_order_line_form2" model="ir.ui.view">
+    <field name="name">sale.order.line.form2.ac_discount</field>
+    <field name="model">sale.order.line</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="sale.view_order_line_form2"/>
+    <field name="arch" type="xml">
+        <field name="discount" position="after">
+            <field name="discount_amount"/>
+        </field>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.invoice -->
+<record id="view_invoice_form" model="ir.ui.view">
+    <field name="name">view.invoice.form.discount</field>
+    <field name="model">account.invoice</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="account.invoice_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <button name="button_reset_taxes" position="before">
+                <field name="discount_extra"/>
+                <field name="discount_extra_amount"/>
+            </button>
+            <field name="payment_term" position="after">
+                <field name="price_type"/>
+            </field>
+        </data>
+    </field>
+</record>
+
+<record id="view_invoice_supplier_form" model="ir.ui.view">
+    <field name="name">view.invoice.supplier.form.discount</field>
+    <field name="model">account.invoice</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <button name="button_reset_taxes" position="before">
+                <field name="discount_extra"/>
+                <field name="discount_extra_amount"/>
+            </button>
+            <field name="check_total" position="after">
+                <field name="price_type"/>
+            </field>
+        </data>
+    </field>
+</record>
+<!--}}}-->
+
+<!--{{{ account.invoice.line -->
+<record id="view_invoice_line_tree" model="ir.ui.view">
+    <field name="name">account.invoice.line.tree.accthai</field>
+    <field name="model">account.invoice.line</field>
+    <field name="type">tree</field>
+    <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+    <field name="arch" type="xml">
+        <data>
+        </data>
+    </field>
+</record>
+<!--}}}-->
+<!--}}}-->
+
+<!--{{{ actions -->
+<act_window id="act_view_bill" name="Bill Issues" res_model="account.bill" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_view_bill_cust" name="Customer Bill Issues" res_model="account.bill" domain="[('type','=','receipt')]" context="{'type':'receipt'}" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_bill_cust" name="New Customer Bill Issue" res_model="account.bill" domain="[('type','=','receipt')]" context="{'type':'receipt'}" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_bill_supp" name="Supplier Bill Issues" res_model="account.bill" domain="[('type','=','payment')]" context="{'type':'payment'}" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_bill_supp" name="New Supplier Bill Issue" res_model="account.bill" domain="[('type','=','payment')]" context="{'type':'payment'}" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_vouch" name="Vouchers" res_model="account.voucher" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_view_rv" name="Receipt Vouchers" res_model="account.voucher" domain="[('type','=','receipt')]" context="{'type':'receipt'}" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_rv" name="New Receipt Voucher" res_model="account.voucher" domain="[('type','=','receipt')]" context="{'type':'receipt'}" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_pv" name="Payment Vouchers" res_model="account.voucher" domain="[('type','=','payment')]" context="{'type':'payment'}" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_pv" name="New Payment Voucher" res_model="account.voucher" domain="[('type','=','payment')]" context="{'type':'payment'}" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_cheque" name="Cheques" res_model="account.cheque" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_view_cheque_in" name="Incoming Cheques" res_model="account.cheque" view_type="form" view_mode="tree,form" domain="[('type','=','receipt')]"/>
+
+<act_window id="act_view_cheque_out" name="Outgoing Cheques" res_model="account.cheque" view_type="form" view_mode="tree,form" domain="[('type','=','payment')]"/>
+
+<act_window id="act_new_cheque_in" name="New Incoming Cheque" res_model="account.cheque" view_type="form" view_mode="form" domain="[('type','=','receipt')]"/>
+
+<act_window id="act_new_cheque_out" name="New Outgoing Cheque" res_model="account.cheque" view_type="form" view_mode="form" domain="[('type','=','payment')]"/>
+
+<act_window id="act_view_bank_st" name="Bank Statements" res_model="ac.bank.statement" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_bank_st" name="New Bank Statement" res_model="ac.bank.statement" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_batch_pay" name="Batch Payments" res_model="batch.payment" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_batch_pay" name="New Batch Payment" res_model="batch.payment" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_petty" name="Petty Cash Funds" res_model="pc.fund" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_view_pc_payment" name="Petty Cash Payments" res_model="pc.payment" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_pc_payment" name="New Petty Cash Payment" res_model="pc.payment" view_type="form" view_mode="form"/>
+
+<act_window id="act_view_pc_replen" name="Petty Cash Replenishments" res_model="pc.replen" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_view_pc_link_payment" name="Petty Cash Payments" src_model="pc.fund" res_model="pc.payment" domain="[('fund_id','=',active_id)]"/>
+
+<act_window id="act_view_pc_link_replen" name="Petty Cash Replenishments" src_model="pc.fund" res_model="pc.replen" domain="[('fund_id','=',active_id)]"/>
+
+<act_window id="act_view_pay_mode" name="Payment Modes" res_model="ac.payment.mode" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_view_add_cost" name="Landed Costs" res_model="add.cost" view_type="form" view_mode="tree,form"/>
+
+<act_window id="act_new_add_cost" name="New Landed Costs" res_model="add.cost" view_type="form" view_mode="form"/>
+
+<record id="act_view_stock_move" model="ir.actions.act_window">
+    <field name="name">Stock Moves With Cost</field>
+    <field name="res_model">stock.move</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<record id="act_view_stock_move_tree" model="ir.actions.act_window.view">
+    <field name="act_window_id" ref="act_view_stock_move"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_stock_move_tree"/>
+</record>
+
+<record id="act_view_stock_move_form" model="ir.actions.act_window.view">
+    <field name="act_window_id" ref="act_view_stock_move"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_stock_move_form"/>
+</record>
+
+<record id="act_wiz_bank_reconcile" model="ir.actions.act_window">
+    <field name="name">Reconcile Entries</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">wiz.bank.reconcile</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="context">{'statement_id':active_id}</field>
+</record>
+
+<record id="ir_wiz_bank_reconcile" model="ir.values">
+    <field name="key">action</field>
+    <field name="key2">client_action_multi</field>
+    <field name="model">ac.bank.statement</field>
+    <field name="name">Reconcile Entries</field>
+    <field name="object" eval="True"/>
+    <field name="value" eval="'ir.actions.act_window,%d'%act_wiz_bank_reconcile"/>
+</record>
+
+<record id="act_report_bs" model="ir.actions.act_window">
+    <field name="name">Balance Sheet</field>
+    <field name="res_model">account.report.report</field>
+    <field name="view_type">tree</field>
+    <field name="view_id" ref="view_account_report_tree"/>
+    <field name="domain">[('parent_id','=',False),('type','=','bs')]</field>
+</record>
+
+<record id="act_report_pl" model="ir.actions.act_window">
+    <field name="name">Income Statement</field>
+    <field name="res_model">account.report.report</field>
+    <field name="view_type">tree</field>
+    <field name="view_id" ref="view_account_report_tree"/>
+    <field name="domain">[('parent_id','=',False),('type','=','pl')]</field>
+</record>
+
+<record id="act_report_cf" model="ir.actions.act_window">
+    <field name="name">Cash Flow Statement</field>
+    <field name="res_model">account.report.report</field>
+    <field name="view_type">tree</field>
+    <field name="view_id" ref="view_account_report_tree"/>
+    <field name="domain">[('parent_id','=',False),('type','=','cf')]</field>
+</record>
+<!--}}}-->
+
+<!--{{{ menu -->
+<menuitem id="menu_view_bill" parent="account.menu_finance_periodical_processing" sequence="21" action="act_view_bill"/>
+
+    <menuitem id="menu_view_bill_cust" parent="menu_view_bill" sequence="1" action="act_view_bill_cust"/>
+
+        <menuitem id="menu_new_bill_cust" parent="menu_view_bill_cust" sequence="1" action="act_new_bill_cust"/>
+
+    <menuitem id="menu_view_bill_supp" parent="menu_view_bill" sequence="2" action="act_view_bill_supp"/>
+
+        <menuitem id="menu_new_bill_supp" parent="menu_view_bill_supp" sequence="1" action="act_new_bill_supp"/>
+
+<menuitem id="menu_view_rv" parent="account.menu_finance" sequence="11" action="act_view_rv"/>
+
+    <menuitem id="menu_new_rv" parent="menu_view_rv" sequence="1" action="act_new_rv"/>
+
+<menuitem id="menu_view_pv" parent="account.menu_finance" sequence="12" action="act_view_pv"/>
+
+    <menuitem id="menu_new_pv" parent="menu_view_pv" sequence="1" action="act_new_pv"/>
+
+<!--
+<menuitem id="menu_view_cheque" parent="account.menu_finance" sequence="13" action="act_view_cheque"/>
+
+    <menuitem id="menu_view_cheque_in" parent="menu_view_cheque" sequence="1" action="act_view_cheque_in"/>
+
+        <menuitem id="menu_new_cheque_in" parent="menu_view_cheque_in" sequence="1" action="act_new_cheque_in"/>
+
+    <menuitem id="menu_view_cheque_out" parent="menu_view_cheque" sequence="2" action="act_view_cheque_out"/>
+
+        <menuitem id="menu_new_cheque_out" parent="menu_view_cheque_out" sequence="1" action="act_new_cheque_out"/>
+-->
+
+<menuitem id="menu_view_petty" parent="account.menu_finance" sequence="14" action="act_view_petty"/>
+
+    <menuitem id="menu_view_pc_payment" parent="menu_view_petty" sequence="1" action="act_view_pc_payment"/>
+
+    <menuitem id="menu_new_pc_payment" parent="menu_view_pc_payment" sequence="1" action="act_new_pc_payment"/>
+
+    <menuitem id="menu_view_pc_replen" parent="menu_view_petty" sequence="2" action="act_view_pc_replen"/>
+
+<menuitem id="menu_view_bank_st" parent="account.menu_finance_periodical_processing" sequence="22" action="act_view_bank_st"/>
+
+    <menuitem id="menu_new_bank_st" parent="menu_view_bank_st" sequence="1" action="act_new_bank_st"/>
+
+<menuitem id="menu_view_batch_pay" parent="account.menu_finance_periodical_processing" sequence="23" action="act_view_batch_pay"/>
+
+<menuitem id="menu_report_thai" parent="account.menu_finance_legal_statement" name="Thailand"/>
+
+    <wizard id="wiz_print_tax" model="account.tax.code" name="print.tax" string="Print Tax Form"/>
+
+    <menuitem id="menu_print_tax" parent="menu_report_thai" icon="STOCK_PRINT" action="wiz_print_tax" type="wizard"/>
+
+<menuitem id="menu_view_pay_mode" parent="account.menu_finance_configuration" action="act_view_pay_mode" sequence="30"/>
+
+<menuitem id="menu_view_add_cost" parent="account.menu_finance" sequence="14" action="act_view_add_cost"/>
+
+    <menuitem id="menu_new_add_cost" parent="menu_view_add_cost" sequence="1" action="act_new_add_cost"/>
+
+<menuitem id="menu_view_stock_move" parent="stock.menu_action_move_form2" action="act_view_stock_move"/>
+
+<delete id="account_report.menu_action_account_report_tree_view_fiscal" model="ir.ui.menu"/>
+
+<menuitem id="menu_fin_stmt" name="Financial Statements" parent="account.menu_finance_reporting" sequence="1"/>
+
+    <menuitem id="menu_report_bs" parent="menu_fin_stmt" action="wiz_report_bs" sequence="1" type="wizard"/>
+
+    <menuitem id="menu_report_pl" parent="menu_fin_stmt" action="wiz_report_pl" sequence="2" type="wizard"/>
+
+    <menuitem id="menu_report_cf" parent="menu_fin_stmt" action="wiz_report_cf" sequence="3" type="wizard"/>
+<!--}}}-->
+
+</data>
+</openerp>
+<!-- vim: set fdm=marker : -->

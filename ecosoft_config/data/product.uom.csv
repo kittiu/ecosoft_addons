@@ -1,0 +1,2 @@
+id,active,category_id/id,factor_inv,factor,rounding,uom_type,name
+product.product_uom_unit,True,product.product_uom_categ_unit,1,1,0.01,Reference Unit of Measure for this category,Unit(s)

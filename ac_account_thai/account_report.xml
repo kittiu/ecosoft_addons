@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report id="report_voucher" model="account.voucher" name="voucher" rml="ac_account_thai/report/rml/voucher.rml" string="Vouchers"/>
+
+	<report id="jas_report_voucher" model="account.voucher" name="jas_voucher" rml="ac_account_thai/report/voucher.jrxml" string="JVoucher"/>
+
+        <report id="report_bill" model="account.bill" name="bill" rml="ac_account_thai/report/rml/bill_issue.rml" string="Bill Issues"/>
+
+        <report id="report_wht_certif" model="account.voucher" name="wht.certif" string="Withholding Tax Certificate"/>
+
+        <report header="False" id="report_pc_vouch" model="pc.payment" name="pc.vouch" rml="ac_account_thai/report/rml/pc_voucher.rml" string="Petty Cash Voucher"/>
+
+        <report auto="False" id="account_report.fiscal_statements" model="account.report.report" name="accounting.report" rml="ac_account_thai/report/rml/accounting_report.rml" string="Financial Statements"/>
+
+        <!--
+        <report auto="False" id="purchase.report_purchase_order" model="purchase.order" name="purchase.order" rml="ac_account_thai/report/po.rml" string="Purchase Orders"/>
+
+        <report auto="False" id="sale.report_sale_order" model="sale.order" name="sale.order" rml="ac_account_thai/report/so.rml" string="Quotation / Order"/>
+        -->
+    </data>
+</openerp>
+<!-- vim: set fdm=marker : -->

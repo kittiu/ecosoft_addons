@@ -1,0 +1,9 @@
+- financial statements in xml data
+- add currency in cheque
+- vat record 2 time
+- consider store
+- wht reverse compute (used when encode supp inv)
+- add account in voucher (not only use journal default account)
+- add THB in module data
+- use ac_addr_thai
+End.

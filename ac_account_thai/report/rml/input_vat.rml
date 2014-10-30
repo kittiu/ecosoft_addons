@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+  <docinit>
+    <registerFont fontName="Garuda" fontFile="/usr/share/fonts/truetype/thai/Garuda.ttf"/>
+    <registerFont fontName="Garuda-Bold" fontFile="/usr/share/fonts/truetype/thai/Garuda-Bold.ttf"/>
+    <registerFont fontName="Garuda-Oblique" fontFile="/usr/share/fonts/truetype/thai/Garuda-Oblique.ttf"/>
+    <registerFont fontName="Garuda-BoldOblique" fontFile="/usr/share/fonts/truetype/thai/Garuda-BoldOblique.ttf"/>
+  </docinit>
+<template>
+  <pageTemplate id="main">
+    <frame id="first" x1="34.0" y1="28.0" width="530" height="786"/>
+  </pageTemplate>
+</template>
+
+<stylesheet>
+    <paraStyle name="bold_center" alignment="center" fontName="Garuda-Bold"/>
+	<paraStyle name="normal" alignment="center" fontName="Garuda"/>
+
+    <blockTableStyle id="grid">
+        <lineStyle kind="GRID" start="0,0" stop="-1,-1" colorName="black"/>
+    </blockTableStyle>
+</stylesheet>
+
+<story>
+    <para style="normal" alignment="right">หน้า [[page_no]]/[[page_total]]</para>
+    <para style="normal" alignment="center" fontSize="14"><b>รายงานภาษีซื้อ</b></para>
+    <spacer length="0.2cm"/>
+    <para style="normal" alignment="center" fontSize="10">เดือน [[month]]  ปี [[year]]</para>
+    <para style="normal" alignment="right">เลขประจำตัวผู้เสียภาษีอากร [[tin]]</para>
+    <para style="normal" >ชื่อผู้ประกอบการ [[name]]</para>
+    <spacer length="0.2cm"/>
+    <blockTable colWidths="50,50,80,180,80,80" rowHeights="20,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30" style="grid">
+        <tr>
+            <td><para style="bold_center">ลำกับที่</para></td>
+            <td><para style="bold_center">อ้างอิง</para></td>
+            <td><para style="bold_center">วัน/เดือน/ปี</para></td>
+            <td><para style="bold_center">ชื่อผู้ขายสินค้า/ผู้ให้บริการ</para></td>
+            <td><para style="bold_center">มูลค่าสินค้า</para></td>
+            <td><para style="bold_center">มูลค่าภาษี</para></td>
+        </tr>
+        <tr rml_loop="repeatIn(lines,'l')">
+            <td><para style="normal" alignment="center">[[ l['item_no'] ]]</para></td>
+            <td><para style="normal" alignment="center">[[ l['invoice'] ]]</para></td>
+            <td><para style="normal" alignment="center">[[ l['date'] ]]</para></td>
+            <td><para style="normal" alignment="center">[[ l['supplier'] ]]</para></td>
+            <td><para style="normal" alignment="right">[[ l['base'] ]]</para></td>
+            <td><para style="normal" alignment="right">[[ l['tax'] ]]</para></td>
+        </tr>
+        <tr rml_loop="repeatIn(range(20-len(lines)),'x')">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </blockTable>
+    <blockTable colWidths="360,80,80" style="grid">
+        <tr>
+            <td><para alignment="right"><b>Subtotal:</b></para></td>
+            <td><para alignment="right">[[total_base]]</para></td>
+            <td><para alignment="right">[[total_tax]]</para></td>
+        </tr>
+    </blockTable>
+    <spacer length="0.5cm"/>
+    <blockTable colWiths="160,160,160">
+        <tr>
+            <td>
+                <para style="normal">จัดทำโดย</para>
+                <para spaceBefore="0.2cm">Date:</para>
+            </td>
+            <td>
+                <para style="normal">ตรวจสอบโดย</para>
+                <para spaceBefore="0.2cm">Date:</para>
+            </td>
+            <td>
+                <para style="normal">อนุมัติโดย</para>
+                <para spaceBefore="0.2cm">Date:</para>
+            </td>
+        </tr>
+    </blockTable>
+    <para style="normal" alignment="right">วันที่พิมพ์ [[date]]</para>
+</story>
+
+</document>

@@ -1,0 +1,27 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_account_bill","account.bill","model_account_bill","account.group_account_user",1,1,1,1
+"access_account_bill_line","account.bill.line","model_account_bill_line","account.group_account_user",1,1,1,1
+"access_account_voucher","account.voucher user","model_account_voucher","account.group_account_user",1,1,1,0
+"access_account_voucher_manager","account.voucher manager","model_account_voucher","account.group_account_manager",1,1,1,1
+"access_account_voucher_line","account.voucher.line user","model_account_voucher_line","account.group_account_user",1,1,1,0
+"access_account_voucher_line_manager manager","account.voucher.line manager","model_account_voucher_line","account.group_account_manager",1,1,1,1
+"access_account_cheque","account.cheque","model_account_cheque","account.group_account_manager",1,1,1,1
+"access_pc_fund_manager","pc.fund ","model_pc_fund","account.group_account_manager",1,1,1,1
+"access_pc_fund","pc.fund user","model_pc_fund","account.group_account_user",1,0,0,0
+"access_pc_replen_manager","pc.replen ","model_pc_replen","account.group_account_manager",1,1,1,1
+"access_pc_replen","pc.replen user","model_pc_replen","account.group_account_user",1,0,0,0
+"access_pc_payment","pc.payment ","model_pc_payment","account.group_account_user",1,1,1,1
+"access_pc_payment_line ","pc.payment.line","model_pc_payment_line","account.group_account_user",1,1,1,1
+"access_ac_bank_statement","ac.bank.statement","model_ac_bank_statement","account.group_account_manager",1,1,1,1
+"access_ac_bank_reconcile","ac.bank.reconcile","model_ac_bank_reconcile","account.group_account_manager",1,1,1,1
+"access_ac_bank_statement_line","ac.bank.statement.line","model_ac_bank_statement_line","account.group_account_manager",1,1,1,1
+"access_wiz_bank","wiz.bank.reconcile","model_wiz_bank_reconcile","account.group_account_user",1,1,1,1
+"access_account_fiscalyear_user_employee","account.fiscalyear employee","account.model_account_fiscalyear","base.group_user",1,0,0,0
+"access_ac_payment_mode_manager","ac.payment.mode manager","ac_account_thai.model_ac_payment_mode","account.group_account_manager",1,1,1,1
+"access_ac_payment_mode_user","ac.payment.mode user","ac_account_thai.model_ac_payment_mode","account.group_account_user",1,0,0,0
+"access_batch_payment_manager","batch.payment manger","ac_account_thai.model_batch_payment","account.group_account_manager",1,1,1,1
+"access_batch_payment_user","batch.payment user","ac_account_thai.model_batch_payment","account.group_account_user",1,0,0,0
+"access_account_voucher_line_tax","account.voucher.line.tax","ac_account_thai.model_account_voucher_line_tax","account.group_account_user",1,1,1,1
+"access_account_voucher_tax","account.voucher.tax","ac_account_thai.model_account_voucher_tax","account.group_account_user",1,1,1,1
+"access_add_cost","add.cost","ac_account_thai.model_add_cost","account.group_account_user",1,1,1,1
+"access_add_cost_line","add.cost.line","ac_account_thai.model_add_cost_line","account.group_account_user",1,1,1,1

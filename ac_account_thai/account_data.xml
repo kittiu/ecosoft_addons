@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+<!-- SEQUENCES -->
+
+<record id="seq_type_bill" model="ir.sequence.type">
+    <field name="name">Bill issue</field>
+    <field name="code">bill</field>
+</record>
+
+<record id="seq_bill" model="ir.sequence">
+    <field name="name">Bill issue</field>
+    <field name="code">bill</field>
+    <field name="prefix">BI%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_rv" model="ir.sequence.type">
+    <field name="name">Receipt voucher</field>
+    <field name="code">receipt.voucher</field>
+</record>
+
+<record id="seq_rv" model="ir.sequence">
+    <field name="name">Receipt voucher</field>
+    <field name="code">receipt.voucher</field>
+    <field name="prefix">RV%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_pv" model="ir.sequence.type">
+    <field name="name">Payment voucher</field>
+    <field name="code">payment.voucher</field>
+</record>
+
+<record id="seq_pv" model="ir.sequence">
+    <field name="name">Payment voucher</field>
+    <field name="code">payment.voucher</field>
+    <field name="prefix">PV%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_pc_payment" model="ir.sequence.type">
+    <field name="name">Petty Cash Payment</field>
+    <field name="code">pc.payment</field>
+</record>
+
+<record id="seq_pc_payment" model="ir.sequence">
+    <field name="name">Petty Cash Payment</field>
+    <field name="code">pc.payment</field>
+    <field name="prefix">PC%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_pc_replen" model="ir.sequence.type">
+    <field name="name">Petty Cash Replenishment</field>
+    <field name="code">pc.replen</field>
+</record>
+
+<record id="seq_pc_replen" model="ir.sequence">
+    <field name="name">Petty Cash Replenishment</field>
+    <field name="code">pc.replen</field>
+    <field name="prefix">PCR%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_bank_st" model="ir.sequence.type">
+    <field name="name">Bank Statement</field>
+    <field name="code">ac.bank.statement</field>
+</record>
+
+<record id="seq_bank_st" model="ir.sequence">
+    <field name="name">Bank Statement</field>
+    <field name="code">ac.bank.statement</field>
+    <field name="prefix">ST%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_bank_reconcile" model="ir.sequence.type">
+    <field name="name">Bank Reconciliation</field>
+    <field name="code">ac.bank.reconcile</field>
+</record>
+
+<record id="seq_bank_reconcile" model="ir.sequence">
+    <field name="name">Bank Reconciliation</field>
+    <field name="code">ac.bank.reconcile</field>
+    <field name="prefix">BR%(y)s-</field>
+    <field name="padding">6</field>
+</record>
+
+<record id="seq_type_batch_pay" model="ir.sequence.type">
+    <field name="name">Batch Payment</field>
+    <field name="code">batch.payment</field>
+</record>
+
+<record id="seq_batch_pay" model="ir.sequence">
+    <field name="name">Batch Payment</field>
+    <field name="code">batch.payment</field>
+    <field name="prefix">BP%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<record id="seq_type_add_cost" model="ir.sequence.type">
+    <field name="name">Landed Cost</field>
+    <field name="code">add.cost</field>
+</record>
+
+<record id="seq_add_cost" model="ir.sequence">
+    <field name="name">Landed Cost</field>
+    <field name="code">add.cost</field>
+    <field name="prefix">LC%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+
+<!--{{{ Journal -->
+<record id="seq_receipt_journal" model="ir.sequence">
+    <field name="name">Receipt Journal</field>
+    <field name="code">account.journal</field>
+    <field name="prefix">RJ%(y)s-</field>
+    <field name="padding">4</field>
+    <field name="prefix"/>
+</record>
+
+<record id="seq_payment_journal" model="ir.sequence">
+    <field name="name">Payment Journal</field>
+    <field name="code">account.journal</field>
+    <field name="prefix">PJ%(y)s-</field>
+    <field name="padding">4</field>
+    <field name="prefix"/>
+</record>
+
+<record id="seq_general_journal" model="ir.sequence">
+    <field name="name">General Journal</field>
+    <field name="code">account.journal</field>
+    <field name="prefix">GJ%(y)s-</field>
+    <field name="padding">4</field>
+</record>
+<!--}}}-->
+
+</data>
+</openerp>
+<!-- vim: set fdm=marker : -->
