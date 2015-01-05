@@ -301,13 +301,13 @@ to 2.1 Standard Chartered Bank (Thai) PCL. Head Office (Sathorn). Account number
 				<text><![CDATA[บริษัท อีโคซอฟต์ จำกัด]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="19" width="461" height="40"/>
+				<reportElement x="0" y="19" width="555" height="40"/>
 				<textElement lineSpacing="Single">
-					<font fontName="Monospaced" size="9" isBold="false" pdfFontName="Garuda-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="Monospaced" size="8" isBold="false" pdfFontName="Garuda-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[ECOSOFT CO., LTD.
-29/24 ซอยเทียนทะเล 7  ถนนบางขุนเทียน-ชายทะเล แขวงแสมดำ เขตบางขุนเทียน กรุงเทพฯ 10150
-29/24 Tien Talay 7, Bangkhuntien-Chaitalay Road, Samaedum, Bangkhuntien, Bangkok Thailand 10150]]></text>
+ชั้น 37 อาคารสาทร สแควร์ ห้อง S-02 เลขที่ 98 ถนนสาทรเหนือ แขวงสีลม เขตบางรัก กรุงเทพฯ ประเทศไทย 10500
+37th Floor Sathorn Square Tower, Room S-02, 98 North Sathorn Road, Silom, Bangrak, Bangkok, Thailand 10500]]></text>
 			</staticText>
 			<image>
 				<reportElement x="493" y="0" width="60" height="59"/>
