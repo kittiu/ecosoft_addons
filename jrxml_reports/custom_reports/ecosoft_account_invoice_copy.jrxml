@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.1269722013523755"/>
-	<property name="ireport.x" value="16"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="OPENERP_RELATIONS" value="[&quot;invoice_line&quot;]"/>
 	<style name="table" lineSpacing="Single">
@@ -190,7 +190,7 @@
 					<font fontName="Monospaced" size="8" isBold="false" pdfFontName="Garuda-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[email: info@ecosoft.co.th
-Tel: +66 8 13415625]]></text>
+Tel: +66 (0) 2 105 6494]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="124" width="123" height="15"/>
@@ -200,14 +200,14 @@ Tel: +66 8 13415625]]></text>
 				<text><![CDATA[ลูกค้า/Client:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="138" width="200" height="15"/>
+				<reportElement x="0" y="138" width="263" height="15"/>
 				<textElement lineSpacing="Single">
 					<font fontName="Monospaced" size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Name-name}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="152" width="200" height="34"/>
+				<reportElement x="0" y="152" width="263" height="34"/>
 				<textElement lineSpacing="Single">
 					<font fontName="Monospaced" size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -303,7 +303,7 @@ Tel: +66 8 13415625]]></text>
 				<textElement lineSpacing="Single">
 					<font fontName="Monospaced" size="10" isBold="true" pdfFontName="Garuda-Bold.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
-				<text><![CDATA[Tax ID. 0105554048641]]></text>
+				<text><![CDATA[Tax ID. 0105554048641 สำนักงานใหญ่]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="362" y="98" width="193" height="20" forecolor="#80C243"/>
@@ -410,7 +410,7 @@ Unit Price]]></text>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{Description-name2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="331" y="2" width="58" height="14" backcolor="#80C243"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="287" y="2" width="102" height="14" backcolor="#80C243"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Monospaced" size="9" pdfFontName="Garuda.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -482,7 +482,7 @@ Unit Price]]></text>
 				</textElement>
 				<text><![CDATA[1. โอนเงินเข้าบัญชี/Transfer to "ecosoft co., ltd."
     Account number: 001 008 17815 Standard Charted Bank (Thai) PCL, Head Office (Sathorn), SWIFT code: SCBLTHBXXXX
-or Account number: 748 2 64808 2 Kasikorn Bank, Central Rama 3 Branch
+or Kasikorn Bank, Sathorn Square. Account number 616 2 09861 4
 
 2. จ่ายเช็คขีดคร่อม/Account Payee cheque to "ecosoft co., ltd."]]></text>
 			</staticText>
